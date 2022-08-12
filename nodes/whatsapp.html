@@ -1,0 +1,593 @@
+<!------------------------------------------------------------------>
+<!-- Whatsapp Account -->
+<script type='text/javascript'>
+    RED.nodes.registerType('whatsapp-account', {
+        category: 'config',
+        icon: "whatsapp.svg",
+        color: "#25d366",
+        defaults: {
+            name: {value: ""}
+        },
+        credentials: {
+            appid: {type: "text"},
+            appsecret: {type: "text"}
+        },
+        label: function () {
+            return this.name || "Whatsapp Account";
+        },
+        oneditsave: function () {
+            console.log('save', this);
+        }
+    });
+</script>
+
+<script type='text/html' data-template-name='whatsapp-account'>
+    <div className='form-row'>
+        <label htmlFor='node-config-input-name'><i className='fa fa-tag'></i> Name</label>
+        <input type='text' id='node-config-input-name' placeholder="Name for the account"/>
+    </div>
+    <div className='form-row'>
+        <label htmlFor='node-config-input-appid'><i className='fa fa-key'></i> APP ID</label>
+        <input type='text' id='node-config-input-appid' placeholder="Your APP ID for whatsapp"/>
+    </div>
+    <div className='form-row'>
+        <label htmlFor='node-config-input-appsecret'><i className='fa fa-key'></i> APP SECRET</label>
+        <input type='text' id='node-config-input-appsecret' placeholder="Your APP SECRET for whatsapp"/>
+    </div>
+    <div className="form-tips">
+        <p><b>Note</b>: To connect and receive a key, leave a request on the website <b><a href="https://www.chatarchitect.com/whatsapp" target="_blank">https://www.chatarchitect.com/whatsapp/</a></b><br>
+            If you have any questions you can write to our WhatsApp <b><a href="https://wa.me/421233221242" target="_blank">https://wa.me/421233221242</a></b></p>
+    </div>
+
+</script>
+
+<script type="text/x-red" data-help-name="whatsapp-account">
+    <p>The application integrates the official WhatsApp Business API into your Node-RED.
+    Incoming and outgoing messages, also you can initiate a conversation.</p>
+
+    <p>The cost of WhatsApp Business API starts from €15 per month, for more details visit the website <b><a href="https://www.chatarchitect.com/whatsapp/" target="_blank">https://www.chatarchitect.com/whatsapp/</a></b></p>
+</script>
+
+
+<!------------------------------------------------------------------>
+<!-- Send Text -->
+<script type='text/javascript'>
+    RED.nodes.registerType('send-text', {
+        category: 'whatsapp',
+        icon: "whatsapp.svg",
+        color: "#25D366",
+        paletteLabel: 'Send a Text',
+        defaults: {
+            name: {
+                value: '',
+                required: false
+            },
+            account: {value: "", type: "whatsapp-account", required: true},
+            text: {
+                value: '',
+                required: false,
+                validate: RED.validators.typedInput('inputtype')
+            },
+            inputtypemessage: {value: 'str'},
+            inputtypeDestination: {value: 'str'},
+            destination: {value: ''}
+        },
+        label: function () {
+            return this.name ? this.name : 'Send a Text'
+        },
+        inputs: 1,
+        outputs: 1,
+        oneditprepare: function () {
+            console.log('prepare', this);
+            $('#node-input-text').typedInput({
+                default: 'str',
+                typeField: $("#node-input-inputtypemessage"),
+                types: ['msg', 'str']
+            });
+            $('#node-input-destination').typedInput({
+                default: 'str',
+                typeField: $("#node-input-inputtypeDestination"),
+                types: ['msg', 'str']
+            });
+        },
+        oneditsave: function () {
+            console.log('save', this);
+        },
+        oneditresize: function () {
+            console.log('resize', this);
+        }
+    })
+</script>
+
+<script type='text/x-red' data-template-name='send-text'>
+    <div className='form-row'>
+        <label htmlFor='node-input-name'><i className='fa fa-tag'></i> Name</label>
+        <input type='text' id='node-input-name' placeholder="Name for the node"/>
+    </div>
+    <div className="form-row">
+        <label htmlFor="node-input-account"><i className="fa fa-user"></i> Account</label>
+        <input type="text" id="node-input-account">
+    </div>
+    <div className="form-row">
+        <label htmlFor="node-input-destination"><i className="fa fa-commenting-o"></i> Destination</label>
+        <input type="text" id="node-input-destination" style="width:70%">
+        <input type="hidden" id="node-input-inputtypeDestination">
+    </div>
+    <div className="form-row">
+        <label htmlFor="node-input-text"><i className="fa fa-commenting-o"></i> Message</label>
+        <!--<textarea id="node-input-text" rows="5" style="width:100%"></textarea>-->
+        <input type="text" id="node-input-text" style="width:70%">
+        <input type="hidden" id="node-input-inputtypemessage">
+    </div>
+</script>
+
+<script type="text/x-red" data-help-name="send-text">
+    <p>
+        Send a text message with <b><a href="https://www.chatarchitect.com/" target="_blank">ChatArchitect.com</a></b> for WhatsApp<br>
+        Destination - WhatsApp number in the international format<br>
+        Outputs: msg.payload with request results.
+    </p>
+</script>
+
+
+<!------------------------------------------------------------------>
+<!-- Send Image -->
+<script type='text/javascript'>
+    RED.nodes.registerType('send-image', {
+        category: 'whatsapp',
+        icon: "whatsapp.svg",
+        color: "#25D366",
+        paletteLabel: 'Send an Image',
+        defaults: {
+            name: {
+                value: '',
+                required: false
+            },
+            account: {value: "", type: "whatsapp-account", required: true},
+            text: {
+                value: '',
+                required: false,
+                validate: RED.validators.typedInput('inputtype')
+            },
+            inputtypeDestination: {value: 'str'},
+            inputtypemessage: {value: 'str'},
+            inputtypeoriginalUrl: {value: 'str'},
+            inputtypepreviewUrl: {value: 'str'},
+            inputtypecaption: {value: 'str'},
+            destination: {value: ''},
+            originalUrl: {
+                value: '',
+                required: false
+            },
+            caption: {
+                value: '',
+                required: false
+            }
+        },
+        label: function () {
+            return this.name ? this.name : 'Send an Image'
+        },
+        inputs: 1,
+        outputs: 1,
+        oneditprepare: function () {
+            console.log('prepare', this);
+            $('#node-input-destination').typedInput({
+                default: 'str',
+                typeField: $("#node-input-inputtypeDestination"),
+                types: ['msg', 'str']
+            });
+            $('#node-input-originalUrl').typedInput({
+                default: 'str',
+                typeField: $("#node-input-inputtypeoriginalUrl"),
+                types: ['msg', 'str']
+            });
+            $('#node-input-previewUrl').typedInput({
+                default: 'str',
+                typeField: $("#node-input-inputtypepreviewUrl"),
+                types: ['msg', 'str']
+            });
+            $('#node-input-caption').typedInput({
+                default: 'str',
+                typeField: $("#node-input-inputtypecaption"),
+                types: ['msg', 'str']
+            });
+        },
+        oneditsave: function () {
+            console.log('save', this);
+        },
+        oneditresize: function () {
+            console.log('resize', this);
+        }
+    })
+</script>
+
+<script type='text/x-red' data-template-name='send-image'>
+    <div className='form-row'>
+        <label htmlFor='node-input-name'><i className='fa fa-tag'></i> Name</label>
+        <input type='text' id='node-input-name' placeholder="Name for the node"/>
+    </div>
+    <div className="form-row">
+        <label htmlFor="node-input-account"><i className="fa fa-user"></i> Account</label>
+        <input type="text" id="node-input-account">
+    </div>
+    <div className="form-row">
+        <label htmlFor="node-input-destination"><i className="fa fa-commenting-o"></i> Destination</label>
+        <input type="text" id="node-input-destination" style="width:70%">
+        <input type="hidden" id="node-input-inputtypeDestination">
+    </div>
+    <div className='form-row'>
+        <label htmlFor='node-input-originalUrl'><i className='fa fa-tag'></i> Url</label>
+        <input type='text' id='node-input-originalUrl' placeholder=" https://www"/>
+        <input type="hidden" id="node-input-inputtypeoriginalUrl">
+    </div>
+    <div className='form-row'>
+        <label htmlFor='node-input-caption'><i className='fa fa-tag'></i> Caption</label>
+        <input type='text' id='node-input-caption' placeholder="caption"/>
+        <input type="hidden" id="node-input-inputtypecaption">
+    </div>
+</script>
+
+<script type="text/x-red" data-help-name="send-image">
+    <p>
+        Send an image with <b><a href="https://www.chatarchitect.com/" target="_blank">ChatArchitect.com</a></b> for WhatsApp<br>
+        Destination - WhatsApp number in the international format<br>
+        Url - direct HTTPS file link, GET and HEAD should return http code 200 with Content-Type and Content-Length headers<br>
+        Outputs: msg.payload with request results.
+    </p>
+</script>
+
+
+<!------------------------------------------------------------------>
+<!-- Send Audio -->
+<script type='text/javascript'>
+    RED.nodes.registerType('send-audio', {
+        category: 'whatsapp',
+        icon: "whatsapp.svg",
+        color: "#25D366",
+        paletteLabel: 'Send an Audio',
+        defaults: {
+            name: {
+                value: '',
+                required: false
+            },
+            account: {value: "", type: "whatsapp-account", required: true},
+            text: {
+                value: '',
+                required: false,
+                validate: RED.validators.typedInput('inputtype')
+            },
+            destination: {value: ''},
+            inputtypeDestination: {value: 'str'},
+            inputtypeUrl: {value: 'str'},
+            url: {value: '', required: false}
+        },
+        label: function () {
+            return this.name ? this.name : 'Send an Audio'
+        },
+        inputs: 1,
+        outputs: 1,
+        oneditprepare: function () {
+            console.log('prepare', this);
+            $('#node-input-destination').typedInput({
+                default: 'str',
+                typeField: $("#node-input-inputtypeDestination"),
+                types: ['msg', 'str']
+            });
+            $('#node-input-url').typedInput({
+                default: 'str',
+                typeField: $("#node-input-inputtypeUrl"),
+                types: ['msg', 'str']
+            });
+        },
+        oneditsave: function () {
+            console.log('save', this);
+        },
+        oneditresize: function () {
+            console.log('resize', this);
+        }
+    })
+</script>
+
+<script type='text/x-red' data-template-name='send-audio'>
+    <div className='form-row'>
+        <label htmlFor='node-input-name'><i className='fa fa-tag'></i> Name</label>
+        <input type='text' id='node-input-name' placeholder="Name for the node"/>
+    </div>
+    <div className="form-row">
+        <label htmlFor="node-input-account"><i className="fa fa-user"></i> Account</label>
+        <input type="text" id="node-input-account">
+    </div>
+    <div className="form-row">
+        <label htmlFor="node-input-destination"><i className="fa fa-commenting-o"></i> Destination</label>
+        <input type="text" id="node-input-destination" style="width:70%">
+        <input type="hidden" id="node-input-inputtypeDestination">
+    </div>
+    <div className='form-row'>
+        <label htmlFor='node-input-url'><i className='fa fa-tag'></i> Url</label>
+        <input type='text' id='node-input-url' placeholder="https://www"/>
+        <input type='hidden' id='node-input-inputtypeUrl'>
+    </div>
+</script>
+
+<script type="text/x-red" data-help-name="send-audio">
+    <p>
+        Send an audio with <b><a href="https://www.chatarchitect.com/" target="_blank">ChatArchitect.com</a></b> for WhatsApp<br>
+        Destination - WhatsApp number in the international format<br>
+        Url - direct HTTPS file link, GET and HEAD should return http code 200 with Content-Type and Content-Length headers<br>
+        Outputs: msg.payload with request results.
+    </p>
+</script>
+
+
+<!------------------------------------------------------------------>
+<!-- Send a Video -->
+<script type='text/javascript'>
+    RED.nodes.registerType('send-video', {
+        category: 'whatsapp',
+        icon: "whatsapp.svg",
+        color: "#25D366",
+        paletteLabel: 'Send a Video',
+        defaults: {
+            name: {
+                value: '',
+                required: false
+            },
+            account: {value: "", type: "whatsapp-account", required: true},
+            text: {
+                value: '',
+                required: false,
+                validate: RED.validators.typedInput('inputtype')
+            },
+            inputtypeDestination: {value: 'str'},
+            inputtypeUrl: {value: 'str'},
+            inputtypeCaption: {value: 'str'},
+            destination: {value: ''},
+            url: {value: '', required: false},
+            caption: {value: '', required: false}
+        },
+        label: function () {
+            return this.name ? this.name : 'Send a Video'
+        },
+        inputs: 1,
+        outputs: 1,
+        oneditprepare: function () {
+            console.log('prepare', this);
+            $('#node-input-destination').typedInput({
+                default: 'str',
+                typeField: $("#node-input-inputtypeDestination"),
+                types: ['msg', 'str']
+            });
+            $('#node-input-url').typedInput({
+                default: 'str',
+                typeField: $("#node-input-inputtypeUrl"),
+                types: ['msg', 'str']
+            });
+            $('#node-input-caption').typedInput({
+                default: 'str',
+                typeField: $("#node-input-inputtypeCaption"),
+                types: ['msg', 'str']
+            });
+        },
+        oneditsave: function () {
+            console.log('save', this);
+        },
+        oneditresize: function () {
+            console.log('resize', this);
+        }
+    })
+</script>
+
+<script type='text/x-red' data-template-name='send-video'>
+    <div className='form-row'>
+        <label htmlFor='node-input-name'><i className='fa fa-tag'></i> Name</label>
+        <input type='text' id='node-input-name' placeholder="Name for the node"/>
+    </div>
+    <div className="form-row">
+        <label htmlFor="node-input-account"><i className="fa fa-user"></i> Account</label>
+        <input type="text" id="node-input-account">
+    </div>
+    <div className='form-row'>
+        <label htmlFor='node-input-destination'><i className='fa fa-tag'></i> Destination</label>
+        <input type='text' id='node-input-destination' placeholder="Destination"/>
+        <input type="hidden" id="node-input-inputtypeDestination">
+    </div>
+    <div className='form-row'>
+        <label htmlFor='node-input-url'><i className='fa fa-tag'></i> Url</label>
+        <input type='text' id='node-input-url' placeholder="https://www"/>
+        <input type='hidden' id='node-input-inputtypeUrl'>
+    </div>
+    <div className='form-row'>
+        <label htmlFor='node-input-caption'><i className='fa fa-tag'></i> Caption</label>
+        <input type='text' id='node-input-caption' placeholder=" Caption"/>
+        <input type='hidden' id='node-input-inputtypeCaption'>
+    </div>
+
+
+</script>
+
+<script type="text/x-red" data-help-name="send-video">
+    <p>
+        Send a video with <b><a href="https://www.chatarchitect.com/" target="_blank">ChatArchitect.com</a></b> for WhatsApp<br>
+        Destination - WhatsApp number in the international format<br>
+        Url - direct HTTPS file link, GET and HEAD should return http code 200 with Content-Type and Content-Length headers<br>
+        Outputs: msg.payload with request results.
+    </p>
+</script>
+
+
+<!------------------------------------------------------------------>
+<!-- Send a Document -->
+<script type='text/javascript'>
+    RED.nodes.registerType('send-document', {
+        category: 'whatsapp',
+        icon: "whatsapp.svg",
+        color: "#25D366",
+        paletteLabel: 'Send a Document',
+        defaults: {
+            name: {
+                value: '',
+                required: false
+            },
+            account: {value: "", type: "whatsapp-account", required: true},
+            text: {
+                value: '',
+                required: false,
+                validate: RED.validators.typedInput('inputtype')
+            },
+            inputtypeDestination: {value: 'str'},
+            inputtypeUrl: {value: 'str'},
+            inputtypeCaption: {value: 'str'},
+            inputtypeFilename: {value: 'str'},
+            destination: {value: ''},
+            url: {value: '', required: false},
+            caption: {value: '', required: false},
+            filename: {value: '', required: false}
+        },
+        label: function () {
+            return this.name ? this.name : 'Send a Document'
+        },
+        inputs: 1,
+        outputs: 1,
+        oneditprepare: function () {
+            console.log('prepare', this);
+            $('#node-input-destination').typedInput({
+                default: 'str',
+                typeField: $("#node-input-inputtypeDestination"),
+                types: ['msg', 'str']
+            });
+            $('#node-input-url').typedInput({
+                default: 'str',
+                typeField: $("#node-input-inputtypeUrl"),
+                types: ['msg', 'str']
+            });
+            $('#node-input-caption').typedInput({
+                default: 'str',
+                typeField: $("#node-input-inputtypeCaption"),
+                types: ['msg', 'str']
+            });
+            $('#node-input-filename').typedInput({
+                default: 'str',
+                typeField: $("#node-input-inputtypeFilename"),
+                types: ['msg', 'str']
+            });
+        },
+        oneditsave: function () {
+            console.log('save', this);
+        },
+        oneditresize: function () {
+            console.log('resize', this);
+        }
+    })
+</script>
+
+<script type='text/x-red' data-template-name='send-document'>
+    <div className='form-row'>
+        <label htmlFor='node-input-name'><i className='fa fa-tag'></i> Name</label>
+        <input type='text' id='node-input-name' placeholder="Name for the node"/>
+    </div>
+    <div className="form-row">
+        <label htmlFor="node-input-account"><i className="fa fa-user"></i> Account</label>
+        <input type="text" id="node-input-account">
+    </div>
+    <div className='form-row'>
+        <label htmlFor='node-input-destination'><i className='fa fa-tag'></i> Destination</label>
+        <input type='text' id='node-input-destination' placeholder="Destination"/>
+        <input type="hidden" id="node-input-inputtypeDestination">
+    </div>
+    <div className='form-row'>
+        <label htmlFor='node-input-url'><i className='fa fa-tag'></i> Url</label>
+        <input type='text' id='node-input-url' placeholder="https://www"/>
+        <input type='hidden' id='node-input-inputtypeUrl'>
+    </div>
+    <div className='form-row'>
+        <label htmlFor='node-input-caption'><i className='fa fa-tag'></i> Caption</label>
+        <input type='text' id='node-input-caption' placeholder="Caption"/>
+        <input type='hidden' id='node-input-inputtypeCaption'>
+    </div>
+    <div className='form-row'>
+        <label htmlFor='node-input-filename'><i className='fa fa-tag'></i> Filename</label>
+        <input type='text' id='node-input-filename' placeholder="https://www"/>
+        <input type='hidden' id='node-input-inputtypeFilename'>
+    </div>
+</script>
+
+<script type="text/x-red" data-help-name="send-document">
+    <p>
+        Send a document with <b><a href="https://www.chatarchitect.com/" target="_blank">ChatArchitect.com</a></b> for WhatsApp<br>
+        Destination - WhatsApp number in the international format<br>
+        Url - direct HTTPS file link, GET and HEAD should return http code 200 with Content-Type and Content-Length headers<br>
+        Outputs: msg.payload with request results.
+    </p>
+</script>
+
+
+<!---------------------Triggers-------------------------------------->
+
+<!-- Set Webhook -->
+
+<script type='text/javascript'>
+    RED.nodes.registerType('set-webhook', {
+        category: 'whatsapp',
+        icon: "whatsapp.svg",
+        color: "#25D366",
+        paletteLabel: 'Set Webhook',
+        defaults: {
+            name: {
+                value: '',
+                required: false
+            },
+            account: {value: "", type: "whatsapp-account", required: true},
+            text: {
+                value: '',
+                required: false,
+                validate: RED.validators.typedInput('inputtype')
+            },
+            inputtypemessage: {value: 'str'},
+            webhook: {value: '', required: false}
+        },
+        label: function () {
+            return this.name ? this.name : 'Set Webhook'
+        },
+        inputs: 1,
+        outputs: 1,
+        oneditprepare: function () {
+            console.log('prepare', this);
+            $('#node-input-text').typedInput({
+                default: 'str',
+                typeField: $("#node-input-inputtypemessage"),
+                types: ['msg', 'str']
+            });
+        },
+        oneditsave: function () {
+            console.log('save', this);
+        },
+        oneditresize: function () {
+            console.log('resize', this);
+        }
+    })
+</script>
+
+<script type='text/x-red' data-template-name='set-webhook'>
+    <div className='form-row'>
+        <label htmlFor='node-input-name'><i className='fa fa-tag'></i> Name</label>
+        <input type='text' id='node-input-name' placeholder="Name for the node"/>
+    </div>
+    <div className="form-row">
+        <label htmlFor="node-input-account"><i className="fa fa-user"></i> Account</label>
+        <input type="text" id="node-input-account">
+    </div>
+    <div className='form-row'>
+        <label htmlFor='node-input-webhook'><i className='fa fa-tag'></i> Webhook URL</label>
+        <input type='text' id='node-input-webhook' placeholder="https://www"/>
+    </div>
+</script>
+
+<script type="text/x-red" data-help-name="set-webhook">
+    <p>
+        One-time node to set Webhook URL.<br>
+        To create the URL you can use the built-in “http in end-point” with POST Method. Only HTTPS is accepted.<br>
+        Outputs: msg.payload with request results
+    </p>
+</script>
+
+<!-- trigger fom http in -->
