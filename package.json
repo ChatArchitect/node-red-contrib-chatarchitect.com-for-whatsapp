@@ -25,19 +25,19 @@
     "name": "ChatArchitect.com"
   },
   "bugs": {
-    "url": "https://github.com/kivicom/node-red-contrib-whatsapp-chatarchitect/issues"
+    "url": "https://github.com/ChatArchitect/node-red-contrib-chatarchitect.com-for-whatsapp/issues"
   },
   "bundleDependencies": false,
   "dependencies": {
     "node-fetch": "^3.2.6"
   },
   "deprecated": false,
-  "description": "Node-RED node to send WhatsApp Messages with WhatsApp chatarchitect",
-  "email": "aigor9534@gmail.com",
+  "description": "The application integrates the official WhatsApp Business API into your Node-RED. Incoming and outgoing messages, also you can initiate a conversation. The cost of WhatsApp Business API starts from €15 per month, for more details visit the website https://www.chatarchitect.com/whatsapp/",
+  "email": "info@chatarchitect.com",
   "engines": {
     "node": ">=10.19.0"
   },
-  "homepage": "https://github.com/kivicom/node-red-contrib-whatsapp-chatarchitect#readme",
+  "homepage": "https://github.com/ChatArchitect/node-red-contrib-chatarchitect.com-for-whatsapp",
   "keywords": [
     "whatsapp",
     "messages",
@@ -46,7 +46,7 @@
   ],
   "license": "MIT",
   "main": "index.js",
-  "name": "node-red-contrib-whatsapp-chatarchitect",
+  "name": "node-red-contrib-chatarchitect.com-for-whatsapp",
   "node-red": {
     "version": ">=2.0.0",
     "nodes": {
@@ -55,7 +55,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/kivicom/node-red-contrib-whatsapp-chatarchitect.git"
+    "url": "git+https://github.com/ChatArchitect/node-red-contrib-chatarchitect.com-for-whatsapp.git"
   },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
