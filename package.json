@@ -37,7 +37,7 @@
   "engines": {
     "node": ">=10.19.0"
   },
-  "homepage": "https://github.com/ChatArchitect/node-red-contrib-chatarchitect.com-for-whatsapp",
+  "homepage": "https://www.chatarchitect.com/whatsapp/",
   "keywords": [
     "whatsapp",
     "messages",
@@ -46,7 +46,7 @@
   ],
   "license": "MIT",
   "main": "index.js",
-  "name": "@ChatArchitect.com/node-red-contrib-chatarchitect.com-for-whatsapp",
+  "name": "@chatarchitect/node-red-contrib-chatarchitect.com-for-whatsapp",
   "node-red": {
     "version": ">=2.0.0",
     "nodes": {
@@ -60,5 +60,5 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "version": "0.0.1"
+  "version": "0.0.2"
 }
