@@ -46,7 +46,7 @@
   ],
   "license": "MIT",
   "main": "index.js",
-  "name": "node-red-contrib-chatarchitect.com-for-whatsapp",
+  "name": "@ChatArchitect.com/node-red-contrib-chatarchitect.com-for-whatsapp",
   "node-red": {
     "version": ">=2.0.0",
     "nodes": {
